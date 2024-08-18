@@ -1,13 +1,12 @@
 import datetime
 import json
 import logging
-from typing import Optional
-
-from config import LOG_DIR
 import os
+from typing import Optional
 
 import pandas as pd
 
+from config import LOG_DIR
 from src.decorators import log
 
 logging.basicConfig(
@@ -15,9 +14,10 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s: %(message)s",
     filename=os.path.join(LOG_DIR, "reports.log"),
     encoding="utf-8",
-    filemode="w")
+    filemode="w",
+)
 
-reports = logging.getLogger('app_reports')
+reports = logging.getLogger("app_reports")
 
 
 @log()
@@ -55,8 +55,9 @@ def spending_by_weekday(transactions: pd.DataFrame, date: Optional[str] = None) 
         print(e)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from src.utils import get_data_from_file
+
     p = get_data_from_file()
-    d = '2020-01-01 00:00:00'
+    d = "2020-01-01 00:00:00"
     print(spending_by_weekday(p, d))

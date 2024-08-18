@@ -1,8 +1,8 @@
 import json
 import logging
-from config import LOG_DIR
 import os
 
+from config import LOG_DIR
 from src.utils import get_data_from_file
 
 logging.basicConfig(
@@ -10,12 +10,14 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s: %(message)s",
     filename=os.path.join(LOG_DIR, "services.log"),
     encoding="utf-8",
-    filemode="w")
+    filemode="w",
+)
 
-services = logging.getLogger('app_service')
+services = logging.getLogger("app_service")
 
 
 def search_transfers_individuals():
+    """Функция возвращает JSON со всеми транзакциями, которые относятся к переводам физлицам"""
     try:
         services.info("Запрос переводов с карты")
         df = get_data_from_file()

@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
-from config import DATA_DIR, ROOT_DIR, LOG_DIR
+from config import DATA_DIR, LOG_DIR, ROOT_DIR
 
 load_dotenv()
 API_KEY = os.getenv("Alpha_Vantage")
@@ -17,14 +17,15 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s: %(message)s",
     filename=os.path.join(LOG_DIR, "utils.log"),
     encoding="utf-8",
-    filemode="w")
+    filemode="w",
+)
 
-greetings = logging.getLogger('app_greeting')
-card_transactions_ = logging.getLogger('app_card_transactions')
-data_json = logging.getLogger('app_data_json')
-exchange_rate = logging.getLogger('app_exchange_rate')
-share_price = logging.getLogger('app_share_price')
-data_from_file = logging.getLogger('app_data_from_file')
+greetings = logging.getLogger("app_greeting")
+card_transactions_ = logging.getLogger("app_card_transactions")
+data_json = logging.getLogger("app_data_json")
+exchange_rate = logging.getLogger("app_exchange_rate")
+share_price = logging.getLogger("app_share_price")
+data_from_file = logging.getLogger("app_data_from_file")
 
 
 def get_greeting() -> str:
@@ -124,8 +125,10 @@ def get_share_price() -> list:
         for stocks in data_stocks["user_stocks"]:
             stocks_dict = {}
             function = "TIME_SERIES_INTRADAY"
-            url = (f"https://www.alphavantage.co/query?function="
-                   f"{function}&symbol={stocks}&interval=5min&apikey={API_KEY}")
+            url = (
+                f"https://www.alphavantage.co/query?function="
+                f"{function}&symbol={stocks}&interval=5min&apikey={API_KEY}"
+            )
             r = requests.get(url)
             data = r.json()
             price = list(data["Time Series (5min)"].values())
