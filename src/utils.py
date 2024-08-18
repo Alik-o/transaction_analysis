@@ -65,7 +65,8 @@ def get_card_transactions(date: datetime.date) -> tuple:
 
         card_transactions_.info("Создание датафрейма для топ транзакции")
         top_transactions_df = df.copy()
-        top_transactions = top_transactions_df.nlargest(5, columns="Сумма операции с округлением", keep="last")
+        unique_categories = top_transactions_df.drop_duplicates(subset="Сумма операции с округлением")
+        top_transactions = unique_categories.nlargest(5, columns="Сумма операции с округлением", keep="first")
         top_transactions_filter = top_transactions[["Дата платежа", "Сумма операции", "Категория", "Описание"]]
         top_transactions_dict = top_transactions_filter.to_dict(orient="records")
         card_transactions_.info("Топ транзакции получены")
